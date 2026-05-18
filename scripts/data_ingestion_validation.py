@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, count, when, trim
+from pyspark.sql.functions import col, count, when, trim, avg, desc
 from pyspark.sql.types import *
 from datetime import datetime
 
@@ -139,3 +139,41 @@ print("\nCleaned movies dataset:")
 cleaned_movies_df.show()
 print("\nCleaned ratings dataset:")
 cleaned_ratings_df.show()
+
+#data transformation - joining cleaned datasets to create a combined dataset for analysis
+movies_with_ratings_df = cleaned_movies_df.join(
+    cleaned_ratings_df,
+    on = "movie_id",
+    how ="inner" 
+)
+
+print("\nCombined movies with ratings dataset:")
+movies_with_ratings_df.show()
+
+#performing aggregations
+
+#calculating average rating per movie along with total number of ratings for each movie
+average_rating_per_movie_df = movies_with_ratings_df.groupBy(
+    "movie_id", "movie_name", "genre", "release_year"
+).agg(
+    avg("rating").alias("average_rating"),
+    count("rating").alias("total_ratings")
+)
+print("\nAverage rating and total ratings per movie:")
+average_rating_per_movie_df.show()
+
+#calculating most popular movies based on total number of ratings
+popular_movies_df = average_rating_per_movie_df.orderBy(
+    col("total_ratings").desc()
+)
+print("\nMost popular movies based on total ratings:")
+popular_movies_df.show()
+
+average_rating_by_genre_df = movies_with_ratings_df.groupBy(
+    "genre"
+).agg(
+    avg("rating").alias("average_rating"),
+    count("rating").alias("total_ratings")
+)
+print("\nAverage rating and total ratings by genre:")
+average_rating_by_genre_df.show()
