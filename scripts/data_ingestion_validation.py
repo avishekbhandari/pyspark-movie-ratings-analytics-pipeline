@@ -177,3 +177,9 @@ average_rating_by_genre_df = movies_with_ratings_df.groupBy(
 )
 print("\nAverage rating and total ratings by genre:")
 average_rating_by_genre_df.show()
+
+
+#saving results to output directory in parquet format
+average_rating_per_movie_df.write.mode("overwrite").parquet("output/average_rating_per_movie")
+average_rating_by_genre_df.write.mode("overwrite").parquet("output/average_rating_by_genre")
+popular_movies_df.write.mode("overwrite").parquet("output/popular_movies")
