@@ -118,3 +118,24 @@ empty_movie_names = movies_df.filter(
 
 empty_movie_names.show()
 print(f"Empty movie names found: {empty_movie_names.count()}")
+
+
+#data cleaning - removing duplicates and invalid records
+
+cleaned_ratings_df = ratings_df.dropDuplicates().filter( #filter keeps rows that satisfy the condition
+    (col("rating").isNotNull()) &
+    (col("rating") > 0) &
+    (col("rating") <=5)
+)
+
+cleaned_movies_df = movies_df.dropDuplicates().filter(
+    (col("release_year").isNotNull()) &
+    (col("release_year") >= 1900) &
+    (col("release_year") <= current_year) &
+    (trim(col("movie_name")) != "")
+)
+
+print("\nCleaned movies dataset:")
+cleaned_movies_df.show()
+print("\nCleaned ratings dataset:")
+cleaned_ratings_df.show()
