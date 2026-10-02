@@ -300,7 +300,7 @@ The output is written in Parquet format under:
 output/average_rating_per_movie/
 output/popular_movies/
 output/average_rating_by_genre/
-
+```
 ## How to Run This Project
 
 ### 1. Clone the repository
