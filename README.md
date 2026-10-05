@@ -58,7 +58,7 @@ pyspark-movie-ratings-analytics-pipeline/
 |   `-- ratings.csv
 |
 |-- scripts/
-|   `-- data_ingestion_validation.py
+|   `-- movie_ratings_pipeline.py
 |
 |-- output/
 |   |-- average_rating_per_movie/
@@ -116,7 +116,7 @@ These issues are handled in the PySpark pipeline.
 The main pipeline script is:
 
 ```text
-scripts/data_ingestion_validation.py
+scripts/movie_ratings_pipeline.py
 ```
 
 This script performs the complete pipeline flow:
@@ -319,7 +319,7 @@ pip install -r requirements.txt
 ### 3. Run the PySpark script
 
 ```bash
-python scripts/data_ingestion_validation.py
+python scripts/movie_ratings_pipeline.py
 ```
 
 After the script runs, it creates output folders under:
@@ -370,14 +370,9 @@ This is a small learning project, so it has some limitations:
 Future improvements could include:
 
 - use a larger movie ratings dataset
-- add a `data/README.md` file
-- rename the script to something clearer like `movie_ratings_pipeline.py`
 - add unit tests for validation logic
 - parameterize input and output paths
-- add logging instead of only using print statements
 - add a simple architecture diagram
-- remove generated output files from GitHub and keep only sample output documentation
-- run the pipeline on Databricks or another Spark environment
 
 ---
 
